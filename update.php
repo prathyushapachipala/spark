@@ -6,29 +6,29 @@
   header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization,X-Requested-With');
 
   include_once '../../config/Database.php';
-  include_once '../../models/Credit.php';
+  include_once '../../models/Category.php';
   // Instantiate DB & connect
   $database = new Database();
   $db = $database->connect();
 
   // Instantiate blog post object
-  $credit = new Credit($db);
+  $category = new Category($db);
 
   // Get raw posted data
   $data = json_decode(file_get_contents("php://input"));
 
   // Set ID to UPDATE
-  $credit->credit_id = $data->credit_id;
+  $category->id = $data->id;
 
-  $credit->username = $data->username;
+  $category->name = $data->name;
 
   // Update post
-  if($credit->update()) {
+  if($category->update()) {
     echo json_encode(
-      array('message' => 'Credit Updated')
+      array('message' => 'Category Updated')
     );
   } else {
     echo json_encode(
-      array('message' => 'Credit not updated')
+      array('message' => 'Category not updated')
     );
   }

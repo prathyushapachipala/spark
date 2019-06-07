@@ -4,17 +4,17 @@
   header('Content-Type: application/json');
 
   include_once '../../config/Database.php';
-  include_once '../../models/Credit.php';
+  include_once '../../models/Category.php';
 
   // Instantiate DB & connect
   $database = new Database();
   $db = $database->connect();
 
   // Instantiate category object
-  $credit = new Credit($db);
+  $category = new Category($db);
 
   // Category read query
-  $result = $credit->read();
+  $result = $category->read();
   
   // Get row count
   $num = $result->rowCount();
@@ -29,8 +29,8 @@
           extract($row);
 
           $cat_item = array(
-            'credit_id' => $credit_id,
-            'username' => $username
+            'id' => $id,
+            'name' => $name
           );
 
           // Push to "data"
@@ -43,6 +43,6 @@
   } else {
         // No Categories
         echo json_encode(
-          array('message' => 'No Credits Found')
+          array('message' => 'No Categories Found')
         );
   }
